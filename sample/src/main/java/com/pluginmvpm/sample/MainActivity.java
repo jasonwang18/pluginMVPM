@@ -1,8 +1,8 @@
 package com.pluginmvpm.sample;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,7 +13,7 @@ import com.pluginmvpm.sample.pm.ViewMethodCenter;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +71,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-
-
-
 
 }

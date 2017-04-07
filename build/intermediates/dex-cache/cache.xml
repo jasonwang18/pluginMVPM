@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.2.0_8caaced2b49a81693e0aa7f1967d19a8b80f7f70/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.2.0_f3a69b2185cf7431a6211366a7300e92915b32ef/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3250a85febb71738a6f00ef95318ac29e167a2e8">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_e5a3a4ff296c451bd6753857ddec05b4c3e69454/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-fragment/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8fe8a8f77d651982ce5e18f6187dc4daf914ac57">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.2.0_3eec66d66c56cdfee047e58d9ea03b2e172ba5ad/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.2.0_b552bcb66a305ecee115db7e6d7125a1dfd05f4b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.2.0_dc92db2b5c24039cf24538d5640e24d7c6769476/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.2.0_f61178b528a9e4e73f54df047f74d09eb7fa6598/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.2.0_1ce8a70623eb0d4c6e15f72774e85c3b38073eba/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.2.0_514a00c233850471b684cb217719d5120aee155b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/support-v4/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.2.0_1977fabe2dd05dce6401d44b8c54313ba939d377/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4adc9eb7fdc91d56c69a7f5bf8262e7930cac82d">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_29ecbc0b0c98c7817396b51fe99f91b0e0886e3b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.2.0_68d81c377567810aee0cc6b5bd6b99cf23221d2a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/vrseen/Documents/github/pluginMVPM/sample/libs/plugin-base.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="df6d4c995ba932e265faa2e5fc54dc1920ab8e97">
+        <dex dex="/Users/vrseen/Documents/github/pluginMVPM/sample/build/intermediates/transforms/dex/debug/folders/1000/2/plugin-base_541273730a0d96c189f1b5b914493154cab08c7b/classes.dex" />
+    </item>
+
+</items>
