@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         test1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean result = viewMethodCenter.callSynMethodBoolean(Constant.Method.METHOD_TEST_PRESENTER_SYN_METHOD, null);
+                boolean result = viewMethodCenter.callSynMethodBoolean("synPresenterMethod", null);
 
                 BaseLog.i("call synmethod result:"+result);
 
@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
         test2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewMethodCenter.callASynMethod(Constant.Method.METHOD_TEST_PRESENTER_ASYN_METHOD, null);
+                viewMethodCenter.callASynMethod("aSynPresenterMethod", null);
             }
         });
 

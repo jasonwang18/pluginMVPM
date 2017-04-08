@@ -2,6 +2,7 @@ package com.pluginmvpm.base.core;
 
 import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.annotation.Instance;
+import com.pluginmvpm.base.annotation.MessageWhat;
 import com.pluginmvpm.base.annotation.Presenter;
 import com.pluginmvpm.base.annotation.SynMethod;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
@@ -213,6 +214,43 @@ public class MethodHelper {
         }
 
         return  callSynMethod(method, presenter, arg);
+
+
+    }
+
+
+    /**
+     * call asynchonize function to presenter that who annotated with "@MessageWhat"
+     *
+     * @param presenter
+     *
+     * see @MessageWhat
+     */
+    public static Map<String, Integer> initASynMethod(BasePresenter presenter){
+
+        Map<String, Integer> methodMap = new HashMap<>();
+
+        Class<? extends BasePresenter> clazz = presenter.getClass();
+
+        Method[] publicMethods = clazz.getMethods();
+
+        for(Method publicMethod: publicMethods){
+
+            Annotation[] methodAnnotations = publicMethod.getAnnotations();
+
+            for(Annotation annotation: methodAnnotations){
+
+                if(annotation instanceof MessageWhat){
+
+                    methodMap.put(publicMethod.getName(), ((MessageWhat) annotation).value());
+
+                }
+            }
+
+        }
+
+
+       return methodMap;
 
 
     }

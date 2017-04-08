@@ -3,6 +3,7 @@ package com.pluginmvpm.sample.presenter;
 import android.os.Message;
 
 import com.pluginmvpm.base.BaseLog;
+import com.pluginmvpm.base.annotation.MessageWhat;
 import com.pluginmvpm.base.annotation.SynMethod;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
 import com.pluginmvpm.base.presenter.BasePresenter;
@@ -21,13 +22,6 @@ public class TestPresenter extends BasePresenter<TestModel1> implements TestCont
 
     public TestPresenter(BaseMethodCenter methodCenter) {
         super(methodCenter);
-    }
-
-    @Override
-    protected void initASynMethod() {
-        mASynMethodMap.put(Constant.Method.METHOD_TEST_PRESENTER_ASYN_METHOD,
-                Constant.MessageWhat.MESSAGE_WHAT_PRESENTER_ASYN_METHOD);
-
     }
 
     @Override
@@ -59,6 +53,7 @@ public class TestPresenter extends BasePresenter<TestModel1> implements TestCont
 
     }
 
+    @MessageWhat(Constant.MessageWhat.MESSAGE_WHAT_PRESENTER_ASYN_METHOD)
     @Override
     public List<String> aSynPresenterMethod() {
 

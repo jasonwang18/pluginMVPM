@@ -10,6 +10,7 @@ import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.api.IContract;
 import com.pluginmvpm.base.api.IMethodCenter;
 import com.pluginmvpm.base.core.AsyncChannel;
+import com.pluginmvpm.base.core.MethodHelper;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
 
 import java.util.HashMap;
@@ -59,7 +60,6 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
     protected void init(){
         mHandler = createHandler(mMethodCenter.getLooper());
         mMethodCenter.register(this);
-        mASynMethodMap = new HashMap<>();
 
         initASynMethod();
         registerASynMethod();
@@ -71,7 +71,9 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
 
     }
 
-    protected abstract void initASynMethod();
+    protected void initASynMethod(){
+        mASynMethodMap = MethodHelper.initASynMethod(this);
+    }
 
     protected abstract Model createModel();
 
