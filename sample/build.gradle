@@ -29,6 +29,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
-    //    compile project(':base')
+    compile project(':base')
     compile files('libs/base.jar')
+//    compile files('libs/base.jar')
 }

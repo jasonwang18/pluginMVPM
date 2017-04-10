@@ -255,4 +255,35 @@ public class MethodHelper {
 
     }
 
+    /**
+     * call asynchonize function to presenter
+     *
+     * @param arg
+     * @param presenter
+     * @param methodName
+     *
+     * see @SynMethod
+     */
+    public static Object callASynMethod(BasePresenter presenter, String methodName, Object[] arg){
+
+
+       Method[] methods = presenter.getClass().getDeclaredMethods();
+
+        for(Method method : methods){
+            if(method.getName().equals(methodName)){
+                try {
+                    return method.invoke(presenter, arg);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+
+    }
+
+
 }

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.pluginmvpm.base.BaseConstant;
 import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.api.IContract;
 import com.pluginmvpm.base.api.IMethodCenter;
@@ -83,14 +84,41 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
             @Override
             public void handleMessage(Message msg) {
 
-                BaseLog.i("handleMessage");
+//                BaseLog.i("handleMessage");
 //                super.handleMessage(msg);
-                handleMsg(msg);
+
+                for(String key:mASynMethodMap.keySet()){
+
+                    if (mASynMethodMap.get(key) == msg.what) {
+
+                        Object result = MethodHelper.callASynMethod(BasePresenter.this, key, (Object[]) msg.obj);
+
+                        if(result != null){// have return
+                            returnMethodResult(msg, result, onHandleResult(result));
+                        }
+                    }
+                }
+
+//                handleMsg(msg);
             }
         };
     }
 
-    protected abstract void handleMsg(Message msg);
+    protected abstract boolean onHandleResult(Object result);
+
+    protected void returnMethodResult(Message msg, Object result, boolean isHandled){
+
+        if (!isHandled) {
+
+            getChannel().replyToMessage(
+                    msg,
+                    BaseConstant.MESSAGE_WHAT_CALLBACK,
+                    msg.what,
+                    0,
+                    result);
+        }
+
+    }
 
 
     public Handler getHandler() {
@@ -110,5 +138,7 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
         return hashCode();
 
     }
+
+
 
 }

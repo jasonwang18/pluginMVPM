@@ -1,7 +1,5 @@
 package com.pluginmvpm.sample.presenter;
 
-import android.os.Message;
-
 import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.annotation.MessageWhat;
 import com.pluginmvpm.base.annotation.SynMethod;
@@ -30,27 +28,8 @@ public class TestPresenter extends BasePresenter<TestModel1> implements TestCont
     }
 
     @Override
-    protected void handleMsg(Message msg) {
-
-        switch (msg.what){
-
-            case Constant.MessageWhat.MESSAGE_WHAT_PRESENTER_ASYN_METHOD:
-
-                //do something
-                    List<String> result = aSynPresenterMethod();
-
-                getChannel().replyToMessage(
-                        msg,
-                        Constant.MessageWhat.MESSAGE_WHAT_CALLBACK,
-                        Constant.MessageWhat.MESSAGE_WHAT_PRESENTER_ASYN_METHOD,
-                        0,
-                        result);
-
-                break;
-
-
-        }
-
+    protected boolean onHandleResult(Object result) {
+        return false;
     }
 
     @MessageWhat(Constant.MessageWhat.MESSAGE_WHAT_PRESENTER_ASYN_METHOD)
