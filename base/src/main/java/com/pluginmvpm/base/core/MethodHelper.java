@@ -85,6 +85,7 @@ public class MethodHelper {
      *  see @Instance
      * @param clazz
      */
+
     public static Map<String, BasePresenter> createInstances(BaseMethodCenter methodCenter, Class<?> clazz){
         Map<String, BasePresenter> map = new HashMap<>();
 

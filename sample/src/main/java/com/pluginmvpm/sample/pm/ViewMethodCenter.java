@@ -1,6 +1,7 @@
 package com.pluginmvpm.sample.pm;
 
 import com.pluginmvpm.base.BaseLog;
+import com.pluginmvpm.base.annotation.Instance;
 import com.pluginmvpm.base.annotation.Presenter;
 import com.pluginmvpm.base.core.SynResult;
 import com.pluginmvpm.base.core.methodcenter.MethodCenter;

@@ -22,6 +22,19 @@ public class TestPresenter extends BasePresenter<TestModel1> implements TestCont
         super(methodCenter);
     }
 
+    private static TestPresenter instance ;
+
+    public static TestPresenter getInstance(BaseMethodCenter methodCenter){
+        if (instance == null) {
+            synchronized (TestPresenter.class){
+                if (instance == null) {
+                    instance = new TestPresenter(methodCenter) ;
+                }
+            }
+        }
+        return instance ;
+    }
+
     @Override
     protected TestModel1 createModel() {
         return new TestModel1();

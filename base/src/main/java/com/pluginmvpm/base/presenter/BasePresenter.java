@@ -11,6 +11,7 @@ import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.api.IContract;
 import com.pluginmvpm.base.api.IMethodCenter;
 import com.pluginmvpm.base.core.AsyncChannel;
+import com.pluginmvpm.base.core.ExecutorHelper;
 import com.pluginmvpm.base.core.MethodHelper;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
 
@@ -84,22 +85,14 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
             @Override
             public void handleMessage(Message msg) {
 
-//                BaseLog.i("handleMessage");
-//                super.handleMessage(msg);
-
                 for(String key:mASynMethodMap.keySet()){
 
                     if (mASynMethodMap.get(key) == msg.what) {
 
-                        Object result = MethodHelper.callASynMethod(BasePresenter.this, key, (Object[]) msg.obj);
-
-                        if(result != null){// have return
-                            returnMethodResult(msg, result, onHandleResult(result));
-                        }
+                        ExecutorHelper.getInstance().execute(new ASynRunnable(msg, key));
                     }
                 }
 
-//                handleMsg(msg);
             }
         };
     }
@@ -139,6 +132,24 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
 
     }
 
+    class ASynRunnable implements Runnable{
 
+        private Message srcMsg;
+        private String methodName;
+
+        public ASynRunnable(Message srcMsg, String methodName){
+            this.srcMsg = srcMsg;
+            this.methodName = methodName;
+        }
+
+        @Override
+        public void run() {
+
+            Object result = MethodHelper.callASynMethod(BasePresenter.this, methodName, (Object[]) srcMsg.obj);
+            if(result != null){// have return
+                returnMethodResult(srcMsg, result, onHandleResult(result));
+            }
+        }
+    }
 
 }
