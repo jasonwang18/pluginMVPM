@@ -1,6 +1,8 @@
 package com.pluginmvpm.base.core.methodcenter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.core.SynResult;
@@ -26,12 +28,49 @@ public class MethodCenter extends BaseMethodCenter {
         super(context);
     }
 
+
+    /**
+     * 调用同步方法
+     * @param method 方法名
+     * @param arg 可变参数
+     */
+    public void callMethodVoid(String method, Object... arg){
+
+        if(isASynMethod(method)){
+            callASynMethod(method, arg);
+        }
+        else{
+            callMethodVoid(method, arg);
+        }
+
+    }
+
+    /**
+     * 调用同步方法
+     * @param method 方法名
+     * @param arg 可变参数
+     */
+    protected void callSynMethodVoid(String method, Object[] arg){
+
+        BaseLog.i("callSynMethodViod");
+
+        SynResult<String> result = (SynResult<String>) callSynMethod(method, arg);
+
+        if("null".equals(result.value())){
+            //success
+        }
+        else if("error".equals(result.value())){
+            BaseLog.e("callSynMethodVoid  error!");
+        }
+
+    }
+
     /**
      * 调用异步方法
      * @param method
      * @param arg
      */
-    public void callASynMethod(String method, String[] arg){
+    protected void callASynMethod(String method, String[] arg){
 
         super.callASynMethod(method, arg);
 
@@ -44,7 +83,7 @@ public class MethodCenter extends BaseMethodCenter {
      * @param arg 可变参数
      * @return bool
      */
-    public  boolean callSynMethodBoolean(String method, String[] arg){
+    public  boolean callMethodBoolean(String method, String[] arg){
 
         BaseLog.i("callSynMethodBoolean");
 
@@ -62,7 +101,7 @@ public class MethodCenter extends BaseMethodCenter {
      * @param arg
      * @return int
      */
-    public int callSynMethodInt(String method, String[] arg){
+    public int callMethodInt(String method, String[] arg){
 
         SynResult<Integer> result = (SynResult<Integer>) callSynMethod(method, arg);
 
@@ -78,7 +117,7 @@ public class MethodCenter extends BaseMethodCenter {
      * @param arg
      * @return String
      */
-    public  String callSynMethodString(String method, String[] arg){
+    public  String callMethodString(String method, String[] arg){
 
         SynResult<String> result = (SynResult<String>) callSynMethod(method, arg);
 

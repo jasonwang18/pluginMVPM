@@ -154,6 +154,16 @@ public class BaseMethodCenter implements IMethodCenter{
 
     }
 
+    public boolean isASynMethod(String methodName){
+
+
+        if(mASynMethodMap.containsKey(methodName) && mMethodChannelMap.containsKey(methodName)) {
+            return true;
+        }
+
+        return false;
+
+    }
 
     public SynResult<?> callSynMethod(String methodName, Object[] arg){
 
