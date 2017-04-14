@@ -10,11 +10,13 @@ import com.pluginmvpm.base.core.methodcenter.MethodCenter;
 import com.pluginmvpm.base.presenter.BasePresenter;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Created by wangshizhan on 17/3/27.
@@ -54,6 +56,8 @@ public class MethodHelper {
                         BasePresenter controller = constructor.newInstance(methodCenter);
 
                         map.put(className, controller);
+
+                        BaseLog.i(""+className+" added");
                     }
 
                 }
@@ -139,6 +143,7 @@ public class MethodHelper {
 
         SynResult result = null;
 
+
         try {
             result = new SynResult<>(method.invoke(presenter, arg));
             BaseLog.i(""+result.value());
@@ -168,40 +173,43 @@ public class MethodHelper {
      *
      * see @SynMethod
      */
-    public static SynResult<?> callSynMethod(Map<String, BasePresenter> presenterMap, String methodName, Object[] arg){
+    public static SynResult<?> callSynMethod(Map<String, BasePresenter> presenterMap, String methodName, Object... arg){
 
         BasePresenter presenter = null;
         Method method = null;
 
         for (String key : presenterMap.keySet()) {
-
+            presenter = presenterMap.get(key);
+/*
             Class clazz = presenterMap.get(key).getClass();
-            Annotation[] classAnnotations = clazz.getAnnotations();
+            Method[] methods = clazz.getDeclaredMethods();
+            BaseLog.i("methods:"+methods.length);
+            for(Method m: methods){
+                BaseLog.i("method:"+m.getName());
+                if(m.getName().equals(methodName)){
+                    method = m;
+                    presenter = presenterMap.get(key);
+                    break outer;
+                }
+            }
+*/
 
-            outer:for(Annotation annotation: classAnnotations){
-                if(annotation instanceof SynMethod){
-                    String[] methodNames = ((SynMethod) annotation).value();
+            try {
+                if(arg == null) {
 
-                    for(String name:methodNames){
-                        if(name.equals(methodName)){
-                            try {
+                    method = presenter.getClass().getDeclaredMethod(methodName);
+                }
+                else{
 
-                                if(arg == null){
-                                    method = clazz.getDeclaredMethod(methodName);
-                                }
-                                else {
-                                    method = clazz.getDeclaredMethod(methodName, Object[].class);
-                                }
-                                presenter = presenterMap.get(key);
-                                break outer;
-                            } catch (NoSuchMethodException e) {
-                                e.printStackTrace();
-                                BaseLog.e("NoSuchMethodException");
-                            }
-                        }
-                    }
+                    method = presenter.getClass().getDeclaredMethod(methodName, getClasses(arg));
 
                 }
+
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            if(method != null){
+                break ;
             }
 
         }
@@ -216,6 +224,19 @@ public class MethodHelper {
 
         return  callSynMethod(method, presenter, arg);
 
+
+    }
+
+    private static Class<?>[] getClasses(Object... arg){
+
+        int length = arg.length;
+        Class<?>[] classes = new Class<?>[length];
+
+        for(int i =0; i < length; i++){
+            classes[i] = arg[i].getClass();
+        }
+
+        return classes;
 
     }
 

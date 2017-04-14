@@ -28,7 +28,7 @@ public class TestModel1 implements TestContract1.ITestModel1 {
     @Override
     public boolean synModelMethod() {
         BaseLog.i("synModelMethod");
-        return false;
+        return true;
     }
 
     @Override

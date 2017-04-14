@@ -99,6 +99,7 @@ public class BaseMethodCenter implements IMethodCenter{
     public void registerMethod(Map<String, Integer> map, int id) {
 
         for (String key : map.keySet()) {
+            BaseLog.i("key:"+key+" id:"+id);
             mMethodChannelMap.put(key, id);
         }
         mASynMethodMap.putAll(map);
@@ -132,7 +133,7 @@ public class BaseMethodCenter implements IMethodCenter{
         }
     }
 
-    public void callASynMethod(String method, Object[] arg){
+    protected void callASynMethod(String method, Object... arg){
 
         BaseLog.i("callASynMethod");
 
@@ -165,7 +166,7 @@ public class BaseMethodCenter implements IMethodCenter{
 
     }
 
-    public SynResult<?> callSynMethod(String methodName, Object[] arg){
+    public SynResult<?> callSynMethod(String methodName, Object... arg){
 
         return MethodHelper.callSynMethod(mControllerMap, methodName, arg);
 

@@ -22,7 +22,7 @@ import java.util.Map;
  * Created by wangshizhan on 17/3/17.
  */
 
-public abstract class BasePresenter<Model extends IContract.IModel> implements IContract.IPresenter {
+public abstract class BasePresenter<Model extends IContract.IModel> {
 
     protected Model model;
     private Handler mHandler;
@@ -90,6 +90,8 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
                     if (mASynMethodMap.get(key) == msg.what) {
 
                         ExecutorHelper.getInstance().execute(new ASynRunnable(msg, key));
+
+                        break;
                     }
                 }
 
@@ -134,20 +136,21 @@ public abstract class BasePresenter<Model extends IContract.IModel> implements I
 
     class ASynRunnable implements Runnable{
 
-        private Message srcMsg;
+        private Message msg = new Message();
         private String methodName;
 
         public ASynRunnable(Message srcMsg, String methodName){
-            this.srcMsg = srcMsg;
+            this.msg.copyFrom(srcMsg);
+
             this.methodName = methodName;
         }
 
         @Override
         public void run() {
 
-            Object result = MethodHelper.callASynMethod(BasePresenter.this, methodName, (Object[]) srcMsg.obj);
+            Object result = MethodHelper.callASynMethod(BasePresenter.this, methodName, (Object[]) msg.obj);
             if(result != null){// have return
-                returnMethodResult(srcMsg, result, onHandleResult(result));
+                returnMethodResult(msg, result, onHandleResult(result));
             }
         }
     }

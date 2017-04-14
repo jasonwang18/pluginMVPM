@@ -12,9 +12,12 @@ public interface TestContract1 {
 
     interface ITestPresenter1 extends IContract.IPresenter{
 
-        List<String> aSynPresenterMethod();
+        List<String> aSynPresenterMethod(String s);
         boolean synPresenterMethod();
 
+        boolean synPresenterMethod2(String s, int i, boolean b);
+
+        boolean synPresenterMethod3(String s, String s2, String s3);
     }
 
 

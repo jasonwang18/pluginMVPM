@@ -15,7 +15,7 @@ import java.util.List;
  * Created by wangshizhan on 17/4/7.
  */
 
-@SynMethod(value = {"synPresenterMethod"})
+
 public class TestPresenter extends BasePresenter<TestModel1> implements TestContract1.ITestPresenter1{
 
     public TestPresenter(BaseMethodCenter methodCenter) {
@@ -47,9 +47,9 @@ public class TestPresenter extends BasePresenter<TestModel1> implements TestCont
 
     @MessageWhat(Constant.MessageWhat.MESSAGE_WHAT_PRESENTER_ASYN_METHOD)
     @Override
-    public List<String> aSynPresenterMethod() {
+    public List<String> aSynPresenterMethod(String s) {
 
-        BaseLog.i("aSynPresenterMethod");
+        BaseLog.i("aSynPresenterMethod s:"+s);
 
         return getModel().aSynModelMethod();
 
@@ -61,5 +61,19 @@ public class TestPresenter extends BasePresenter<TestModel1> implements TestCont
         BaseLog.i("synPresenterMethod");
 
         return getModel().synModelMethod();
+    }
+
+    @Override
+    public boolean synPresenterMethod2(String s, int i, boolean b) {
+        BaseLog.i("synPresenterMethod2 s:"+s);
+
+        return false;
+    }
+
+    @Override
+    public boolean synPresenterMethod3(String s, String s2, String s3) {
+        BaseLog.i("synPresenterMethod2 s:"+s);
+
+        return false;
     }
 }
