@@ -32,7 +32,7 @@ public class BaseMethodCenter implements IMethodCenter{
     private MethodHandler mHandler;
     private Looper mLooper;
     private SparseArray<AsyncChannel> mChannels;
-    private Map<String, BasePresenter> mControllerMap;
+    private Map<String, BasePresenter> mPresenterMap;
 
     private Callback callback;
 
@@ -66,14 +66,14 @@ public class BaseMethodCenter implements IMethodCenter{
     //初始化所有presenter
     private void initPresenter() {
 
-        mControllerMap = MethodHelper.createPresenters(this, getClass());
+        mPresenterMap = MethodHelper.createPresenters(this, getClass());
 
     }
 
     //初始化所有singletons
     private void initInstance() {
 
-        mControllerMap.putAll(MethodHelper.createInstances(this, getClass()));
+        mPresenterMap.putAll(MethodHelper.createInstances(this, getClass()));
 
     }
 
@@ -168,7 +168,19 @@ public class BaseMethodCenter implements IMethodCenter{
 
     public SynResult<?> callSynMethod(String methodName, Object... arg){
 
-        return MethodHelper.callSynMethod(mControllerMap, methodName, arg);
+        for(String key :mPresenterMap.keySet()){
+
+            BasePresenter presenter = mPresenterMap.get(key);
+            if(presenter.hasSynMethod(methodName)){
+                return MethodHelper.callSynMethod(presenter, methodName, arg);
+            }
+            else{
+                continue;
+            }
+        }
+
+
+        return new SynResult<>("error");
 
 
     }

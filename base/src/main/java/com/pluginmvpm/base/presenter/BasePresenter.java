@@ -32,6 +32,7 @@ public abstract class BasePresenter<Model extends IContract.IModel> {
     protected IMethodCenter mMethodCenter;
 
     protected Map<String, Integer> mASynMethodMap;
+    protected Map<String, Integer> mSynMethodMap;
 
     public BasePresenter(BaseMethodCenter methodCenter){
 
@@ -63,7 +64,7 @@ public abstract class BasePresenter<Model extends IContract.IModel> {
         mHandler = createHandler(mMethodCenter.getLooper());
         mMethodCenter.register(this);
 
-        initASynMethod();
+        initAllMethod();
         registerASynMethod();
     }
 
@@ -73,8 +74,19 @@ public abstract class BasePresenter<Model extends IContract.IModel> {
 
     }
 
-    protected void initASynMethod(){
-        mASynMethodMap = MethodHelper.initASynMethod(this);
+    protected void initAllMethod(){
+        Map<String, Integer>[] maps = MethodHelper.initAllMethod(this);
+        mASynMethodMap = maps[0];
+        mSynMethodMap  = maps[1];
+    }
+
+    /**
+     * check if has syn method
+     * @param method
+     * @return true is has the method
+     */
+    public boolean hasSynMethod(String method){
+        return mSynMethodMap.containsKey(method);
     }
 
     protected abstract Model createModel();

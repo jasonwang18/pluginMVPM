@@ -2,7 +2,6 @@ package com.pluginmvpm.sample.presenter;
 
 import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.annotation.MessageWhat;
-import com.pluginmvpm.base.annotation.SynMethod;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
 import com.pluginmvpm.base.presenter.BasePresenter;
 import com.pluginmvpm.sample.Constant;

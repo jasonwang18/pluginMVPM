@@ -4,19 +4,16 @@ import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.annotation.Instance;
 import com.pluginmvpm.base.annotation.MessageWhat;
 import com.pluginmvpm.base.annotation.Presenter;
-import com.pluginmvpm.base.annotation.SynMethod;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
 import com.pluginmvpm.base.core.methodcenter.MethodCenter;
 import com.pluginmvpm.base.presenter.BasePresenter;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by wangshizhan on 17/3/27.
@@ -30,12 +27,12 @@ import java.util.Objects;
 public class MethodHelper {
 
     /**
-     *  create instance for controllers by annotation "Instance"
+     *  create instance for presneters by annotation "Presenter"
      *
      *  see @Instance
      * @param clazz
      */
-    public static Map<String, BasePresenter> createPresenters(BaseMethodCenter methodCenter, Class<?> clazz){
+    public static Map<String, BasePresenter> createPresenters(BaseMethodCenter methodCenter, Class<?> clazz) {
         Map<String, BasePresenter> map = new HashMap<>();
 
         try {
@@ -49,15 +46,13 @@ public class MethodHelper {
 
                     for(String className:classes){
 
-                        Class controllerClazz = Class.forName(MethodCenter.getPresenterPath()+"."+className);
+                        Class presenterClass = Class.forName(MethodCenter.getPresenterPath()+"."+className);
+                        Constructor<BasePresenter> constructor = presenterClass.getConstructor(BaseMethodCenter.class);
+                        constructor.setAccessible(true);
+                        BasePresenter presenter = constructor.newInstance(methodCenter);
+                        map.put(className, presenter);
 
-                        Constructor<BasePresenter> constructor = controllerClazz.getConstructor(BaseMethodCenter.class);
-
-                        BasePresenter controller = constructor.newInstance(methodCenter);
-
-                        map.put(className, controller);
-
-                        BaseLog.i(""+className+" added");
+                        BaseLog.d(""+className+" added");
                     }
 
                 }
@@ -78,19 +73,17 @@ public class MethodHelper {
         } catch (InstantiationException e) {
             e.printStackTrace();
             BaseLog.e("createPresenters InstantiationException");
-
         }
 
         return map;
     }
     /**
-     *  create singlton instance for presenters by annotation "Instance"
+     *  create instance for presenters by annotation "Instance"
      *
      *  see @Instance
      * @param clazz
      */
-
-    public static Map<String, BasePresenter> createInstances(BaseMethodCenter methodCenter, Class<?> clazz){
+    public static Map<String, BasePresenter> createInstances(BaseMethodCenter methodCenter, Class<?> clazz) {
         Map<String, BasePresenter> map = new HashMap<>();
 
         try {
@@ -104,13 +97,13 @@ public class MethodHelper {
 
                     for(String className:classes){
 
-                        Class presenterClazz = Class.forName(MethodCenter.getPresenterPath()+"."+className);
-
-                        Method getInstance = presenterClazz.getDeclaredMethod("getInstance", BaseMethodCenter.class);
-
-                        BasePresenter presenter = (BasePresenter) getInstance.invoke(presenterClazz, methodCenter);
-
+                        Class presenterClass = Class.forName(MethodCenter.getPresenterPath()+"."+className);
+                        Constructor<BasePresenter> constructor = presenterClass.getConstructor(BaseMethodCenter.class);
+                        constructor.setAccessible(true);
+                        BasePresenter presenter = constructor.newInstance(methodCenter);
                         map.put(className, presenter);
+
+                        BaseLog.d(""+className+" added");
                     }
 
                 }
@@ -128,6 +121,9 @@ public class MethodHelper {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             BaseLog.e("createInstances IllegalAccessException");
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+            BaseLog.e("createInstances InstantiationException");
         }
 
         return map;
@@ -135,18 +131,15 @@ public class MethodHelper {
 
 
     /**
-     * call synchonize method function to controller that who annotated with "@SynMethod"
-     *
-     * see @SynMethod
+     * call synchonize function to presenters
      */
-    public static SynResult<?> callSynMethod(Method method, BasePresenter presenter, Object[] arg){
+    public static SynResult<?> callSynMethod(Method method, BasePresenter presenter,  Object[] arg){
 
         SynResult result = null;
 
-
         try {
             result = new SynResult<>(method.invoke(presenter, arg));
-            BaseLog.i(""+result.value());
+            BaseLog.i("callSynMethod result:"+result.value());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
             BaseLog.e("callSynMethod IllegalAccessException");
@@ -157,7 +150,11 @@ public class MethodHelper {
         }
 
         if(result == null){
-            return null;
+            return new SynResult<>("error");
+        }
+
+        if(result.value() == null){
+            return new SynResult<>("null");
         }
 
         return result;
@@ -165,21 +162,19 @@ public class MethodHelper {
     }
 
     /**
-     * call synchonize function to controllers those who annotated with "@SynMethod"
+     * call synchonize function
      *
      * @param arg
-     * @param presenterMap
      * @param methodName
      *
-     * see @SynMethod
      */
-    public static SynResult<?> callSynMethod(Map<String, BasePresenter> presenterMap, String methodName, Object... arg){
+    public static SynResult<?> callSynMethod(BasePresenter presenter, String methodName, Object[] arg){
 
-        BasePresenter presenter = null;
         Method method = null;
 
-        for (String key : presenterMap.keySet()) {
-            presenter = presenterMap.get(key);
+
+//            BaseLog.i("loop");
+
 /*
             Class clazz = presenterMap.get(key).getClass();
             Method[] methods = clazz.getDeclaredMethods();
@@ -194,36 +189,30 @@ public class MethodHelper {
             }
 */
 
-            try {
-                if(arg == null) {
+        try {
+            if(arg == null) {
 
-                    method = presenter.getClass().getDeclaredMethod(methodName);
-                }
-                else{
-
-                    method = presenter.getClass().getDeclaredMethod(methodName, getClasses(arg));
-
-                }
-
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+                method = presenter.getClass().getDeclaredMethod(methodName);
             }
-            if(method != null){
-                break ;
+            else{
+
+                method = presenter.getClass().getDeclaredMethod(methodName, getClasses(arg));
+
             }
 
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
         }
 
 
         if(method == null){
-            BaseLog.e("cannot find the presenter");
+            BaseLog.e("未找到对应presenter");
 
             return null;
 
         }
 
         return  callSynMethod(method, presenter, arg);
-
 
     }
 
@@ -240,7 +229,6 @@ public class MethodHelper {
 
     }
 
-
     /**
      * call asynchonize function to presenter that who annotated with "@MessageWhat"
      *
@@ -248,9 +236,11 @@ public class MethodHelper {
      *
      * see @MessageWhat
      */
-    public static Map<String, Integer> initASynMethod(BasePresenter presenter){
+    public static Map<String, Integer>[] initAllMethod(BasePresenter presenter){
 
-        Map<String, Integer> methodMap = new HashMap<>();
+        Map<String, Integer>[] maps = new Map[2];
+        Map<String, Integer> asynMethodMap = new HashMap<>();
+        Map<String, Integer> synMethodMap = new HashMap<>();
 
         Class<? extends BasePresenter> clazz = presenter.getClass();
 
@@ -264,15 +254,20 @@ public class MethodHelper {
 
                 if(annotation instanceof MessageWhat){
 
-                    methodMap.put(publicMethod.getName(), ((MessageWhat) annotation).value());
+                    asynMethodMap.put(publicMethod.getName(), ((MessageWhat) annotation).value());
+                    continue;
 
                 }
             }
 
+            synMethodMap.put(publicMethod.getName(), 0);
+
         }
 
+        maps[0] = asynMethodMap;
+        maps[1] = synMethodMap;
 
-       return methodMap;
+        return maps;
 
 
     }
@@ -288,8 +283,28 @@ public class MethodHelper {
      */
     public static Object callASynMethod(BasePresenter presenter, String methodName, Object[] arg){
 
+//        BaseLog.i("callASynMethod method:"+methodName);
 
-       Method[] methods = presenter.getClass().getDeclaredMethods();
+        Method method = null;
+
+        try {
+            if(arg == null) {
+
+                method = presenter.getClass().getDeclaredMethod(methodName);
+            }
+            else{
+
+                method = presenter.getClass().getDeclaredMethod(methodName, getClasses(arg));
+
+            }
+
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        if(method == null){
+            return null ;
+        }
+       /* Method[] methods = presenter.getClass().getDeclaredMethods();
 
         for(Method method : methods){
             if(method.getName().equals(methodName)){
@@ -301,11 +316,18 @@ public class MethodHelper {
                     e.printStackTrace();
                 }
             }
+        }*/
+
+        try {
+            return method.invoke(presenter, arg);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
         }
 
-        return null;
-
     }
-
 
 }
