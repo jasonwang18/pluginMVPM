@@ -1,9 +1,9 @@
 package com.pluginmvpm.base.core;
 
+import com.pluginmvpm.annotation.Instance;
+import com.pluginmvpm.annotation.MessageWhat;
+import com.pluginmvpm.annotation.Presenter;
 import com.pluginmvpm.base.BaseLog;
-import com.pluginmvpm.base.annotation.Instance;
-import com.pluginmvpm.base.annotation.MessageWhat;
-import com.pluginmvpm.base.annotation.Presenter;
 import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
 import com.pluginmvpm.base.core.methodcenter.MethodCenter;
 import com.pluginmvpm.base.presenter.BasePresenter;
@@ -25,110 +25,6 @@ import java.util.Map;
  */
 
 public class MethodHelper {
-
-    /**
-     *  create instance for presneters by annotation "Presenter"
-     *
-     *  see @Instance
-     * @param clazz
-     */
-    public static Map<String, BasePresenter> createPresenters(BaseMethodCenter methodCenter, Class<?> clazz) {
-        Map<String, BasePresenter> map = new HashMap<>();
-
-        try {
-
-            Annotation[] classAnnotations = clazz.getAnnotations();
-
-            for(Annotation annotation : classAnnotations){
-
-                if(annotation instanceof Presenter){
-                    String[] classes = ((Presenter) annotation).value();
-
-                    for(String className:classes){
-
-                        Class presenterClass = Class.forName(MethodCenter.getPresenterPath()+"."+className);
-                        Constructor<BasePresenter> constructor = presenterClass.getConstructor(BaseMethodCenter.class);
-                        constructor.setAccessible(true);
-                        BasePresenter presenter = constructor.newInstance(methodCenter);
-                        map.put(className, presenter);
-
-                        BaseLog.d(""+className+" added");
-                    }
-
-                }
-            }
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            BaseLog.e("createPresenters NoSuchMethodException");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            BaseLog.e("createPresenters ClassNotFoundException");
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            BaseLog.e("createPresenters InvocationTargetException");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            BaseLog.e("createPresenters IllegalAccessException");
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            BaseLog.e("createPresenters InstantiationException");
-        }
-
-        return map;
-    }
-    /**
-     *  create instance for presenters by annotation "Instance"
-     *
-     *  see @Instance
-     * @param clazz
-     */
-    public static Map<String, BasePresenter> createInstances(BaseMethodCenter methodCenter, Class<?> clazz) {
-        Map<String, BasePresenter> map = new HashMap<>();
-
-        try {
-
-            Annotation[] classAnnotations = clazz.getAnnotations();
-
-            for(Annotation annotation : classAnnotations){
-
-                if(annotation instanceof Instance){
-                    String[] classes = ((Instance) annotation).value();
-
-                    for(String className:classes){
-
-                        Class presenterClass = Class.forName(MethodCenter.getPresenterPath()+"."+className);
-                        Constructor<BasePresenter> constructor = presenterClass.getConstructor(BaseMethodCenter.class);
-                        constructor.setAccessible(true);
-                        BasePresenter presenter = constructor.newInstance(methodCenter);
-                        map.put(className, presenter);
-
-                        BaseLog.d(""+className+" added");
-                    }
-
-                }
-            }
-
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            BaseLog.e("createInstances NoSuchMethodException");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            BaseLog.e("createInstances ClassNotFoundException");
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            BaseLog.e("createInstances InvocationTargetException");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            BaseLog.e("createInstances IllegalAccessException");
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-            BaseLog.e("createInstances InstantiationException");
-        }
-
-        return map;
-    }
-
 
     /**
      * call synchonize function to presenters

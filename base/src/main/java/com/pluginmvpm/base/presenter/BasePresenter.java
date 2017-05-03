@@ -1,44 +1,48 @@
 package com.pluginmvpm.base.presenter;
 
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
 import com.pluginmvpm.base.BaseConstant;
-import com.pluginmvpm.base.BaseLog;
 import com.pluginmvpm.base.api.IContract;
 import com.pluginmvpm.base.api.IMethodCenter;
 import com.pluginmvpm.base.core.AsyncChannel;
 import com.pluginmvpm.base.core.ExecutorHelper;
 import com.pluginmvpm.base.core.MethodHelper;
-import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
+import com.pluginmvpm.base.util.InstanceUtil;
 
-import java.util.HashMap;
+import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 /**
  * Created by wangshizhan on 17/3/17.
  */
 
-public abstract class BasePresenter<Model extends IContract.IModel> {
+public abstract class BasePresenter<MC extends IMethodCenter,Model extends IContract.IModel> {
 
     protected Model model;
     private Handler mHandler;
     private AsyncChannel mChannel;
-    protected Context mContext;
 
-    protected IMethodCenter mMethodCenter;
+    protected MC mMethodCenter;
 
     protected Map<String, Integer> mASynMethodMap;
     protected Map<String, Integer> mSynMethodMap;
 
-    public BasePresenter(BaseMethodCenter methodCenter){
+    public BasePresenter(){
 
-        mMethodCenter = methodCenter;
-        mContext = methodCenter.context();
-        model = createModel();
+        if (this instanceof BasePresenter &&
+                this.getClass().getGenericSuperclass() instanceof ParameterizedType &&
+                ((ParameterizedType) (this.getClass().getGenericSuperclass())).getActualTypeArguments().length > 0) {
+            Class modelClass = (Class) ((ParameterizedType) (this.getClass()
+                    .getGenericSuperclass())).getActualTypeArguments()[1];
+            Class methodCenterClass = (Class) ((ParameterizedType) (this.getClass()
+                    .getGenericSuperclass())).getActualTypeArguments()[0];
+            model = InstanceUtil.getInstance(modelClass);
+            mMethodCenter = InstanceUtil.getInstance(methodCenterClass);
+        }
 
         init();
 
@@ -61,6 +65,7 @@ public abstract class BasePresenter<Model extends IContract.IModel> {
     }
 
     protected void init(){
+
         mHandler = createHandler(mMethodCenter.getLooper());
         mMethodCenter.register(this);
 
@@ -89,7 +94,7 @@ public abstract class BasePresenter<Model extends IContract.IModel> {
         return mSynMethodMap.containsKey(method);
     }
 
-    protected abstract Model createModel();
+//    protected abstract Model createModel();
 
     protected Handler createHandler(Looper looper){
         return new ControllerHandler(looper){

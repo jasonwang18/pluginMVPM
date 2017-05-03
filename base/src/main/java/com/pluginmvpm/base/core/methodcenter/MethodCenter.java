@@ -11,16 +11,6 @@ import com.pluginmvpm.base.core.SynResult;
 
 public class MethodCenter extends BaseMethodCenter {
 
-    private static String presenterPath = "";
-
-    public static void setPresenterPath(String path) {
-        presenterPath = path;
-    }
-
-    public static String getPresenterPath() {
-        return presenterPath;
-    }
-
 
     public MethodCenter(Context context){
         super(context);

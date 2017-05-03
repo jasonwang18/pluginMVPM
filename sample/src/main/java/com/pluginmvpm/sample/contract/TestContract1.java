@@ -1,6 +1,6 @@
 package com.pluginmvpm.sample.contract;
 
-import com.pluginmvpm.base.api.IContract;
+import com.pluginmvpm.sample.base.api.IContract;
 
 import java.util.List;
 

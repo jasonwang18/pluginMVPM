@@ -1,11 +1,9 @@
 package com.pluginmvpm.sample.pm;
 
-import com.pluginmvpm.base.BaseLog;
-import com.pluginmvpm.base.annotation.Instance;
-import com.pluginmvpm.base.annotation.Presenter;
-import com.pluginmvpm.base.core.SynResult;
-import com.pluginmvpm.base.core.methodcenter.MethodCenter;
+import com.pluginmvpm.annotation.Presenter;
 import com.pluginmvpm.sample.SampleApplication;
+import com.pluginmvpm.sample.base.core.methodcenter.MethodCenter;
+import com.pluginmvpm.sample.presenter.TestPresenter;
 
 /**
  * Created by wangshizhan on 17/4/7.
@@ -18,24 +16,14 @@ import com.pluginmvpm.sample.SampleApplication;
  *
  */
 
-@Presenter(value = {"TestPresenter"})
+@Presenter(value = {TestPresenter.class})
 public class ViewMethodCenter extends MethodCenter {
 
-    private static ViewMethodCenter instance ;
 
     public ViewMethodCenter(){
         super(SampleApplication.context());
     }
 
-    public static ViewMethodCenter getInstance(){
-        if (instance == null) {
-            synchronized (ViewMethodCenter.class){
-                if (instance == null) {
-                    instance = new ViewMethodCenter() ;
-                }
-            }
-        }
-        return instance ;
-    }
+
 
 }

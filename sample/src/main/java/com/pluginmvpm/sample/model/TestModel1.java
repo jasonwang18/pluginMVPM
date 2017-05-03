@@ -1,6 +1,6 @@
 package com.pluginmvpm.sample.model;
 
-import com.pluginmvpm.base.BaseLog;
+import com.pluginmvpm.sample.base.BaseLog;
 import com.pluginmvpm.sample.contract.TestContract1;
 
 import java.util.ArrayList;

@@ -6,9 +6,9 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 
-import com.pluginmvpm.base.BaseLog;
-import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
-import com.pluginmvpm.base.core.methodcenter.MethodCenter;
+import com.pluginmvpm.sample.base.BaseLog;
+import com.pluginmvpm.sample.base.core.methodcenter.BaseMethodCenter;
+import com.pluginmvpm.sample.base.core.methodcenter.MethodCenter;
 import com.pluginmvpm.sample.pm.ViewMethodCenter;
 
 import java.util.List;
@@ -47,8 +47,8 @@ public class MainActivity extends Activity {
 
     protected void init() {
 
-        ViewMethodCenter.setPresenterPath(Constant.PRESENTER_PATH);
         viewMethodCenter = new ViewMethodCenter();
+
 
         viewMethodCenter.setCallback(new BaseMethodCenter.Callback() {
             @Override

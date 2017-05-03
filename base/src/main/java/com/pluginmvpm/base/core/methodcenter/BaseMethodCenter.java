@@ -57,25 +57,8 @@ public class BaseMethodCenter implements IMethodCenter{
         mASynMethodMap = new HashMap<>();
         mMethodChannelMap = new HashMap<>();
 
-
-        initPresenter();
-
-        initInstance();
     }
 
-    //初始化所有presenter
-    private void initPresenter() {
-
-        mPresenterMap = MethodHelper.createPresenters(this, getClass());
-
-    }
-
-    //初始化所有singletons
-    private void initInstance() {
-
-        mPresenterMap.putAll(MethodHelper.createInstances(this, getClass()));
-
-    }
 
     @Override
     public void register(BasePresenter basePresenter){
@@ -83,6 +66,8 @@ public class BaseMethodCenter implements IMethodCenter{
         if(mChannels == null){
             mChannels = new SparseArray<>();
         }
+
+        mPresenterMap.put(basePresenter.getClass().getSimpleName(), basePresenter);
 
         if(mChannels.get(basePresenter.getId()) != null){
 

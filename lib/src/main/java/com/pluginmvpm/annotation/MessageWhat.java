@@ -1,4 +1,4 @@
-package com.pluginmvpm.base.annotation;
+package com.pluginmvpm.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,10 +9,10 @@ import java.lang.annotation.Target;
  * Created by wangshizhan on 17/3/27.
  */
 
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Instance {
+public @interface MessageWhat {
 
-    String[] value();
+   int value();
 
 }

@@ -1,10 +1,11 @@
 package com.pluginmvpm.sample.presenter;
 
-import com.pluginmvpm.base.BaseLog;
-import com.pluginmvpm.base.annotation.MessageWhat;
-import com.pluginmvpm.base.core.methodcenter.BaseMethodCenter;
-import com.pluginmvpm.base.presenter.BasePresenter;
+import com.pluginmvpm.annotation.InstanceFactory;
+import com.pluginmvpm.annotation.MessageWhat;
 import com.pluginmvpm.sample.Constant;
+import com.pluginmvpm.sample.base.BaseLog;
+import com.pluginmvpm.sample.base.api.IMethodCenter;
+import com.pluginmvpm.sample.base.presenter.BasePresenter;
 import com.pluginmvpm.sample.contract.TestContract1;
 import com.pluginmvpm.sample.model.TestModel1;
 
@@ -14,29 +15,11 @@ import java.util.List;
  * Created by wangshizhan on 17/4/7.
  */
 
-
+@InstanceFactory
 public class TestPresenter extends BasePresenter<TestModel1> implements TestContract1.ITestPresenter1{
 
-    public TestPresenter(BaseMethodCenter methodCenter) {
-        super(methodCenter);
-    }
-
-    private static TestPresenter instance ;
-
-    public static TestPresenter getInstance(BaseMethodCenter methodCenter){
-        if (instance == null) {
-            synchronized (TestPresenter.class){
-                if (instance == null) {
-                    instance = new TestPresenter(methodCenter) ;
-                }
-            }
-        }
-        return instance ;
-    }
-
-    @Override
-    protected TestModel1 createModel() {
-        return new TestModel1();
+    public TestPresenter() {
+        super();
     }
 
     @Override
